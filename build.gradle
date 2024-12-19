@@ -1,0 +1,75 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        kotlin_version = '1.8.10'
+    }
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
+       // maven { url 'https://repo.spring.io/libs-release/'}
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            
+        }
+        maven { url 'https://jcenter.bintray.com/' }
+        maven {
+            url uri('mint-plugin-repo-5.2.5')
+        }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.5.0'
+        //classpath 'com.android.tools.build:gradle:7.2.2'
+     //   classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.google.gms:google-services:4.3.10'
+        /*Deliver all*/
+        classpath "io.realm:realm-gradle-plugin:10.15.1"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
+        maven { url 'https://mvnrepository.com/artifact/com.github.ethanhua/Skeleton'}
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            
+        }
+        maven { url 'https://jcenter.bintray.com/' }
+        maven { url 'https://mvnrepository.com/artifact/com.twitter.sdk.android/twitter-core'}
+        //maven { url 'https://mvnrepository.com/artifact/io.github.sac/SocketclusterClientJava'}
+        maven { url 'https://mvnrepository.com/artifact/com.kyleduo.switchbutton/library'}
+        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+       // maven { url 'https://jcenter.bintray.com/' }
+
+    }
+}
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.twitter.sdk.android' && details.requested.name == 'twitter') {
+                details.useVersion('3.3.0')
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
